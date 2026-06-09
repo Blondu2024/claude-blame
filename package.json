@@ -1,0 +1,55 @@
+{
+  "name": "git-why",
+  "version": "0.1.0",
+  "description": "Link every git commit to the AI conversation that wrote it. Open `git why src/auth.ts:42` and jump straight to the Claude Code session that produced that line.",
+  "type": "module",
+  "bin": {
+    "git-why": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "llms.txt"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": [
+    "git",
+    "claude",
+    "claude-code",
+    "ai",
+    "cli",
+    "blame",
+    "developer-tools",
+    "ai-history"
+  ],
+  "author": "Cristian Tanase <Blondu2024@users.noreply.github.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Blondu2024/git-why.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Blondu2024/git-why/issues"
+  },
+  "homepage": "https://github.com/Blondu2024/git-why#readme",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
