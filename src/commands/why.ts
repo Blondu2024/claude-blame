@@ -40,6 +40,7 @@ export function why(cwd: string, target: string, opts: WhyOptions = {}): void {
           sessionId: guess.sessionId,
           sessionPath: guess.path,
           recordedAt: new Date().toISOString(),
+          matchKind: "guess",
         };
         source = "backfill";
       }
@@ -62,11 +63,13 @@ export function why(cwd: string, target: string, opts: WhyOptions = {}): void {
     mtimeMs: 0,
   });
 
-  console.log(
-    pc.dim(
-      `session ${record.sessionId}` + (source === "backfill" ? "  (guess)" : ""),
-    ),
-  );
+  let confidence = "";
+  if (source === "backfill" || record.matchKind === "guess") {
+    confidence = pc.yellow("  (guess — backfill, may be inaccurate)");
+  } else if (record.matchKind === "parent") {
+    confidence = pc.yellow("  (parent-dir match — Claude launched outside repo)");
+  }
+  console.log(pc.dim(`session ${record.sessionId}`) + confidence);
   if (enriched.firstUserMessage) {
     console.log(pc.cyan(`first prompt: ${enriched.firstUserMessage}`));
   }

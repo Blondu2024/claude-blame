@@ -1,11 +1,13 @@
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { gitDir } from "./git.js";
+import type { SessionMatchKind } from "./sessions.js";
 
 export interface CommitRecord {
   sessionId: string;
   sessionPath: string;
   recordedAt: string;
+  matchKind?: SessionMatchKind | "guess";
 }
 
 export interface SessionsFile {

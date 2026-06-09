@@ -18,13 +18,28 @@ export function listCmd(cwd: string, n = 10): void {
 
   for (const c of commits) {
     const rec = map[c.sha];
-    const sid = rec
-      ? pc.cyan(rec.sessionId.slice(0, 8))
-      : pc.dim("—       ");
+    let sid: string;
+    if (!rec) {
+      sid = pc.dim("—       ");
+    } else {
+      const short = rec.sessionId.slice(0, 8);
+      const marker =
+        rec.matchKind === "guess"
+          ? pc.yellow("?")
+          : rec.matchKind === "parent"
+            ? pc.yellow("~")
+            : " ";
+      sid = pc.cyan(short) + marker;
+    }
     const date = c.date.slice(0, 10);
-    const subject = c.subject.length > 60
-      ? c.subject.slice(0, 57) + "..."
-      : c.subject;
+    const subject =
+      c.subject.length > 56 ? c.subject.slice(0, 53) + "..." : c.subject;
     console.log(`${pc.yellow(c.sha.slice(0, 7))}  ${date}  ${sid}  ${subject}`);
   }
+
+  console.log(
+    pc.dim(
+      "\nLegend:  ? = backfill guess   ~ = parent-dir match   blank = exact match",
+    ),
+  );
 }

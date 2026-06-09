@@ -27,12 +27,17 @@ export function record(cwd: string, opts: { quiet?: boolean } = {}): void {
     sessionId: session.sessionId,
     sessionPath: session.path,
     recordedAt: new Date().toISOString(),
+    matchKind: session.matchKind,
   });
 
   if (!opts.quiet) {
+    const tag =
+      session.matchKind === "parent"
+        ? pc.yellow(" (parent-dir match)")
+        : "";
     console.log(
       pc.green(
-        `✓ claude-blame: linked ${sha.slice(0, 7)} → session ${session.sessionId.slice(0, 8)}`,
+        `✓ claude-blame: linked ${sha.slice(0, 7)} → session ${session.sessionId.slice(0, 8)}${tag}`,
       ),
     );
   }

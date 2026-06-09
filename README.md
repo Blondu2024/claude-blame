@@ -88,6 +88,20 @@ claude-blame list -n 25
 
 All local. No daemon. No network call.
 
+## How matches are scored
+
+Claude Code stores each session under `~/.claude/projects/<encoded-cwd>/`, where `<encoded-cwd>` is the directory Claude Code was launched from. So which session wrote your commit depends on **where you launched Claude Code**, not where the commit lives.
+
+`claude-blame` reports three match qualities:
+
+| Tag | Meaning |
+|---|---|
+| _(no tag)_ | **Exact match.** Claude was launched from the repo root. Most accurate. |
+| `~` / `(parent-dir match)` | Claude was launched from a parent directory (e.g., your home folder) and you edited files inside this repo. Almost always correct, but not guaranteed. |
+| `?` / `(guess)` | Set by `claude-blame backfill`. Matched by timestamp only — if multiple sessions overlap, this can mislink. Use sparingly. |
+
+**Best practice:** launch Claude Code from the repo root (`cd ~/my-project && claude`) so every commit gets an exact match.
+
 ---
 
 ## What gets stored

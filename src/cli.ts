@@ -6,7 +6,7 @@ import { why } from "./commands/why.js";
 import { listCmd } from "./commands/list.js";
 import { backfill } from "./commands/backfill.js";
 
-const VERSION = "0.1.0";
+const VERSION = "0.1.1";
 
 const program = new Command();
 

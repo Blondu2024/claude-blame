@@ -1,6 +1,6 @@
 {
   "name": "claude-blame",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "git blame says WHO. claude-blame says WHICH CLAUDE SESSION. Link every git commit to the Claude Code conversation that wrote it, then jump back into it with one command.",
   "type": "module",
   "bin": {
