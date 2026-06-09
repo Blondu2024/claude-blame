@@ -4,7 +4,7 @@
   "description": "git blame says WHO. claude-blame says WHICH CLAUDE SESSION. Link every git commit to the Claude Code conversation that wrote it, then jump back into it with one command.",
   "type": "module",
   "bin": {
-    "claude-blame": "./dist/cli.js"
+    "claude-blame": "dist/cli.js"
   },
   "files": [
     "dist",
@@ -37,7 +37,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Blondu2024/claude-blame.git"
+    "url": "git+https://github.com/Blondu2024/claude-blame.git"
   },
   "bugs": {
     "url": "https://github.com/Blondu2024/claude-blame/issues"
