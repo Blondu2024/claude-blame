@@ -5,3 +5,8 @@ dist/
 .env
 .env.local
 coverage/
+
+# Private launch / marketing notes — never commit
+LINKEDIN_POSTS.md
+launch-notes.md
+*.private.md
