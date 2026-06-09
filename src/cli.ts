@@ -11,9 +11,9 @@ const VERSION = "0.1.0";
 const program = new Command();
 
 program
-  .name("git-why")
+  .name("claude-blame")
   .description(
-    "Link every git commit to the Claude Code session that wrote it. Then jump back into the conversation with one command.",
+    "git blame says WHO. claude-blame says WHICH CLAUDE SESSION. Link every git commit to the Claude Code conversation that wrote it — then jump back in with one command.",
   )
   .version(VERSION);
 

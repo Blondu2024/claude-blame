@@ -1,9 +1,11 @@
-# git-why
+# claude-blame
 
-> **Why is this line of code here?** Open the Claude Code conversation that wrote it — in one command.
+> **`git blame` says WHO. `claude-blame` says WHICH CLAUDE SESSION.**
+>
+> Link every git commit to the Claude Code conversation that wrote it — then jump back into it with one command.
 
 ```bash
-$ git why src/auth.ts:42
+$ claude-blame src/auth.ts:42
 commit a1b2c3d4e5f6  fix: handle expired refresh tokens
 session 9e297d8a-ef72-483e-8599-d2d6c2874a6a
 first prompt: refresh tokens are getting rejected after 24h, debug this
@@ -11,7 +13,7 @@ first prompt: refresh tokens are getting rejected after 24h, debug this
 → opening: claude --resume 9e297d8a-ef72-483e-8599-d2d6c2874a6a
 ```
 
-`git-why` is a tiny CLI that records which **Claude Code session** was active when each commit was made. Later, you can run `git why <file>:<line>` and jump straight back into the exact conversation that produced that code — full context, intact.
+A tiny CLI that records which **Claude Code session** was active when each commit was made. Later, you can run `claude-blame <file>:<line>` and jump straight back into the exact conversation that produced that code — full context, intact.
 
 No cloud. No telemetry. Everything stays local in `.git/ai-sessions.json`.
 
@@ -25,20 +27,20 @@ You're 3 weeks into a project. A bug surfaces. You open the file, find the suspe
 
 Claude Code already saves every session as a `.jsonl` file. The conversation is on your disk. The problem is finding **the specific one** that wrote **the specific line** you're staring at.
 
-`git-why` solves that with a post-commit hook + `git blame`.
+`claude-blame` solves that with a post-commit hook + `git blame`.
 
 ---
 
 ## Install
 
 ```bash
-npm install -g git-why
+npm install -g claude-blame
 ```
 
 Then, in any git repository where you use Claude Code:
 
 ```bash
-git-why install
+claude-blame install
 ```
 
 This adds a `post-commit` hook. From now on, every commit gets linked to your currently-active Claude Code session.
@@ -46,7 +48,7 @@ This adds a `post-commit` hook. From now on, every commit gets linked to your cu
 For commits made **before** you installed, try:
 
 ```bash
-git-why backfill
+claude-blame backfill
 ```
 
 It matches past commits to sessions by timestamp (best-effort — not perfect, but usually close).
@@ -57,31 +59,29 @@ It matches past commits to sessions by timestamp (best-effort — not perfect, b
 
 ```bash
 # By file + line — jumps to the session that authored that line
-git why src/auth.ts:42
+claude-blame src/auth.ts:42
 
 # By commit SHA — direct lookup
-git why a1b2c3d
+claude-blame a1b2c3d
 
 # Print the transcript instead of opening Claude Code
-git why src/auth.ts:42 --print
+claude-blame src/auth.ts:42 --print
 
 # List recent commits and their linked sessions
-git-why list
-git-why list -n 25
+claude-blame list
+claude-blame list -n 25
 ```
-
-> ℹ️ Both `git why` (git subcommand syntax, because the binary is on `$PATH`) and `git-why` work identically.
 
 ---
 
 ## How it works
 
-1. **`git-why install`** writes a `post-commit` hook into `.git/hooks/post-commit`.
-2. After every commit, the hook calls `git-why _record`, which:
+1. **`claude-blame install`** writes a `post-commit` hook into `.git/hooks/post-commit`.
+2. After every commit, the hook calls `claude-blame _record`, which:
    - reads `~/.claude/projects/<encoded-cwd>/*.jsonl`,
    - picks the **most recently modified** session file (= the one you were just using),
    - saves `commit_sha → session_id` into `.git/ai-sessions.json`.
-3. When you run `git why <file>:<line>`, it:
+3. When you run `claude-blame <file>:<line>`, it:
    - runs `git blame` on that line to find the commit,
    - looks up the session in `.git/ai-sessions.json`,
    - runs `claude --resume <session_id>` to drop you back into the conversation.
@@ -107,7 +107,7 @@ All local. No daemon. No network call.
 }
 ```
 
-The actual session transcript stays where Claude Code put it. `git-why` only stores the pointer.
+The actual session transcript stays where Claude Code put it. `claude-blame` only stores the pointer.
 
 You can `.gitignore` `ai-sessions.json` if you don't want to share session IDs across the team, or commit it if you do.
 
@@ -125,7 +125,7 @@ You can `.gitignore` `ai-sessions.json` if you don't want to share session IDs a
 
 - [ ] MCP server version (so Claude Code can answer "why was this written?" without leaving the editor)
 - [ ] Cursor / Aider session detection
-- [ ] `git why --since=2.weeks` (range lookups)
+- [ ] `claude-blame --since=2.weeks` (range lookups)
 - [ ] HTML transcript viewer fallback when Claude Code isn't installed
 - [ ] Team mode: optional shared session metadata via a separate sync repo
 
@@ -139,7 +139,7 @@ PRs welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md).
 No. Everything is local. The tool reads `~/.claude/projects/` (already on your disk) and writes `.git/ai-sessions.json` (in your repo).
 
 **What if I use multiple Claude Code sessions per commit?**
-`git-why` records the **most recently active** one at the moment of commit. If you switch sessions a lot, the post-commit hook captures whichever was touched last.
+`claude-blame` records the **most recently active** one at the moment of commit. If you switch sessions a lot, the post-commit hook captures whichever was touched last.
 
 **Does it work for Cursor / Aider / Continue?**
 Not yet — only Claude Code for now. PRs welcome.

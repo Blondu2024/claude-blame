@@ -19,7 +19,9 @@ export function why(cwd: string, target: string, opts: WhyOptions = {}): void {
   if (!sha) {
     console.error(pc.red(`✗ Could not find a commit for "${target}".`));
     console.error(
-      pc.dim('  Try `git-why <file>:<line>` or `git-why <commit-sha>`.'),
+      pc.dim(
+        '  Try `claude-blame <file>:<line>` or `claude-blame <commit-sha>`.',
+      ),
     );
     process.exit(1);
   }
@@ -48,7 +50,7 @@ export function why(cwd: string, target: string, opts: WhyOptions = {}): void {
     console.error(pc.yellow("⚠ No Claude Code session recorded for this commit."));
     console.error(
       pc.dim(
-        "  Run `git-why install` to start tracking, or `git-why backfill` for past commits.",
+        "  Run `claude-blame install` to start tracking, or `claude-blame backfill` for past commits.",
       ),
     );
     process.exit(2);
@@ -97,7 +99,7 @@ function resumeInClaude(sessionId: string): void {
   child.on("error", (err) => {
     console.error(pc.red(`✗ Failed to launch claude: ${err.message}`));
     console.error(
-      pc.dim("  Install Claude Code, or use `git-why <target> --print`."),
+      pc.dim("  Install Claude Code, or use `claude-blame <target> --print`."),
     );
     process.exit(1);
   });

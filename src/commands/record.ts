@@ -17,7 +17,7 @@ export function record(cwd: string, opts: { quiet?: boolean } = {}): void {
   if (!session) {
     if (!opts.quiet) {
       console.log(
-        pc.dim(`git-why: no active Claude Code session found for ${cwd}`),
+        pc.dim(`claude-blame: no active Claude Code session found for ${cwd}`),
       );
     }
     return;
@@ -32,7 +32,7 @@ export function record(cwd: string, opts: { quiet?: boolean } = {}): void {
   if (!opts.quiet) {
     console.log(
       pc.green(
-        `✓ git-why: linked ${sha.slice(0, 7)} → session ${session.sessionId.slice(0, 8)}`,
+        `✓ claude-blame: linked ${sha.slice(0, 7)} → session ${session.sessionId.slice(0, 8)}`,
       ),
     );
   }

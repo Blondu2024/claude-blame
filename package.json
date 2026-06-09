@@ -1,10 +1,10 @@
 {
-  "name": "git-why",
+  "name": "claude-blame",
   "version": "0.1.0",
-  "description": "Link every git commit to the AI conversation that wrote it. Open `git why src/auth.ts:42` and jump straight to the Claude Code session that produced that line.",
+  "description": "git blame says WHO. claude-blame says WHICH CLAUDE SESSION. Link every git commit to the Claude Code conversation that wrote it, then jump back into it with one command.",
   "type": "module",
   "bin": {
-    "git-why": "./dist/cli.js"
+    "claude-blame": "./dist/cli.js"
   },
   "files": [
     "dist",
@@ -23,22 +23,26 @@
     "git",
     "claude",
     "claude-code",
+    "anthropic",
     "ai",
     "cli",
     "blame",
+    "git-blame",
     "developer-tools",
-    "ai-history"
+    "ai-history",
+    "llm",
+    "code-archaeology"
   ],
   "author": "Cristian Tanase <Blondu2024@users.noreply.github.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Blondu2024/git-why.git"
+    "url": "https://github.com/Blondu2024/claude-blame.git"
   },
   "bugs": {
-    "url": "https://github.com/Blondu2024/git-why/issues"
+    "url": "https://github.com/Blondu2024/claude-blame/issues"
   },
-  "homepage": "https://github.com/Blondu2024/git-why#readme",
+  "homepage": "https://github.com/Blondu2024/claude-blame#readme",
   "engines": {
     "node": ">=18"
   },

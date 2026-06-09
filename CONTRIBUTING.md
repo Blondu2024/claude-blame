@@ -1,12 +1,12 @@
-# Contributing to git-why
+# Contributing to claude-blame
 
 Thanks for your interest!
 
 ## Dev setup
 
 ```bash
-git clone https://github.com/Blondu2024/git-why
-cd git-why
+git clone https://github.com/Blondu2024/claude-blame
+cd claude-blame
 npm install
 npm run build
 npm test
@@ -16,8 +16,8 @@ npm test
 
 ```bash
 npm link
-# Now `git-why` on PATH points at your local build
-git-why --version
+# Now `claude-blame` on PATH points at your local build
+claude-blame --version
 ```
 
 ## Tests
@@ -37,7 +37,7 @@ npm run test:watch
 
 ## What's out of scope
 
-- Cloud sync, telemetry, accounts — `git-why` is intentionally local-first
+- Cloud sync, telemetry, accounts — `claude-blame` is intentionally local-first
 - Heavy dependencies — keep the binary small
 
 ## Code style

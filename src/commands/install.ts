@@ -3,9 +3,9 @@ import { join } from "node:path";
 import pc from "picocolors";
 import { hooksPath, isGitRepo } from "../git.js";
 
-const HOOK_MARKER = "# git-why hook v1";
+const HOOK_MARKER = "# claude-blame hook v1";
 const HOOK_LINE = `${HOOK_MARKER}
-git-why _record >/dev/null 2>&1 || true`;
+claude-blame _record >/dev/null 2>&1 || true`;
 
 const HOOK_TEMPLATE = `#!/bin/sh
 ${HOOK_LINE}
@@ -22,13 +22,15 @@ export function install(cwd: string): void {
   if (existsSync(hookFile)) {
     const current = readFileSync(hookFile, "utf8");
     if (current.includes(HOOK_MARKER)) {
-      console.log(pc.green("✓ git-why hook already installed."));
+      console.log(pc.green("✓ claude-blame hook already installed."));
       return;
     }
     const next = current.trimEnd() + "\n\n" + HOOK_LINE + "\n";
     writeFileSync(hookFile, next, "utf8");
     chmodSync(hookFile, 0o755);
-    console.log(pc.green("✓ Appended git-why to existing post-commit hook."));
+    console.log(
+      pc.green("✓ Appended claude-blame to existing post-commit hook."),
+    );
     return;
   }
 
